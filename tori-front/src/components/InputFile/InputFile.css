@@ -1,0 +1,64 @@
+.Container-add-photo {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  border-style: solid;
+  border-color: grey;
+  border-width: 1px;
+  height: fit-content;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.Container-preview-photos {
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.Product-photos {
+  margin: 25px;
+  border-radius: 5px;
+  width: 20%;
+  align-self: center;
+}
+
+.Choose-file-button {
+  align-self: center;
+  width: 90px;
+  padding: 12px 21px;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: #8ebf42;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+}
+.Upload-photo-button {
+  margin-top: 25px;
+  align-self: center;
+  width: 90px;
+  padding: 12px 19px;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: #8ebf42;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+}
+input[type="file"] {
+  display: none;
+}
+
+.Photo-preview {
+  margin-bottom: 25px;
+  border-radius: 5px;
+  width: 20%;
+  align-self: center;
+}
+
+.button-wrap {
+  width: 100%;
+}

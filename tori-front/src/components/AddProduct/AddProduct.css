@@ -1,0 +1,39 @@
+
+.Form-product{
+  width: 85vw;
+  justify-content: space-between;
+  text-align: start;
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+  border-radius: 5px;
+  padding: 2.5vw;
+  font-size: large;
+}
+
+.Input-container-product {
+  display: flex;
+  flex-direction: column;
+  font-family: inherit;
+  font-size: inherit;
+  margin-top: 20px;
+}
+.Input{
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 5px;
+}
+.Input-description{
+  height: 60px;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 5px;
+}
+
+.Button {
+  font-weight: var(--weight);
+  font-size: 16px;
+  border-radius: 5px;
+  padding: 15px;
+  margin-top: 15px;
+}

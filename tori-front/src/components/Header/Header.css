@@ -1,0 +1,46 @@
+.App-header {
+  min-height: 50px;
+  max-height: 100px;
+  border-style: solid none;
+  border-width: 1px;
+  /* border-radius: 5px; */
+  border-color: black;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: var(--maxWidth);
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 10px;
+}
+
+.Header-container {
+  display: flex;
+}
+
+.Header-item {
+  margin-top: 10px;
+  margin-left: 2.5vw;
+  margin-right: 5vw;
+  align-self: center;
+}
+.Header-logo {
+  margin-top: 10px;
+  margin-left: 2.5vw;
+  margin-right: 5vw;
+  align-self: center;
+}
+.Header-login {
+  margin-top: 15px;
+  /* margin-left: 5vw; */
+  margin-right: 2.5vw;
+  align-self: center;
+}
+.Header-login:hover {
+  cursor: pointer;
+}
+.Header-logo:hover {
+  cursor: pointer;
+}
+.Header-item:hover {
+  cursor: pointer;
+}

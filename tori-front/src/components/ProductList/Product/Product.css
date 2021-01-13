@@ -1,0 +1,42 @@
+.Content {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  text-align: start;
+  color: white;
+  background-color: rgb(60, 60, 60);
+}
+
+.Column {
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+  background-color: rgb(60, 60, 60);
+}
+
+.Title {
+  font-size: 14;
+  color: white;
+}
+.Pos {
+  margin-bottom: 12;
+}
+
+.Left-info {
+  padding-top: 5px;
+}
+
+.Media {
+  justify-content: flex-end;
+  border-radius: 5px;
+  min-width: 200px;
+  min-height: 150px;
+  width: 25vw;
+  height: 15vw;
+}
+
+.Right {
+  flex: 50%;
+  text-align: right;
+}

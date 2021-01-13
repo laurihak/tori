@@ -1,0 +1,33 @@
+version: "3.5"
+
+services:
+  postgres:
+    build: ./tori-back/postgres
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - POSTGRES_USER=username
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=tori
+    ports:
+      - 5432
+
+  docker-backend:
+    build: ./tori-back
+    network_mode: host
+    environment:
+      - PG_USER=username
+      - PG_PASSWORD=password
+      - PG_DATABASE=tori
+      - PG_HOST=localhost
+      - SECRET=TORISECRET
+    ports:
+      - 4000
+
+  docker-frontend:
+    build: ./tori-front
+    network_mode: host
+    environment:
+      - REACT_APP_API_URL=http://localhost:4000/api
+    ports:
+      - 8081
