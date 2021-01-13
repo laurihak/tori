@@ -58,7 +58,7 @@ const Product = () => {
     const getImages = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/products/${id}/images`
+          `${API_URL}/products/${id}/images`
         );
         if (!response || !response.data.length === 0) return;
         setImages(response.data);
