@@ -23,7 +23,7 @@ const InputFile = ({ file, setFile }) => {
 
   const [images, setImages] = useState([]);
 
-  const urlToImages = `${process.env.REACT_APP_API_URL}/products/${id}/images`;
+  const urlToImages = `http://localhost:4000/api/products/${id}/images`;
 
   const handleChange = (event) => {
     setFile(event.target.files[0]);
@@ -48,7 +48,7 @@ const InputFile = ({ file, setFile }) => {
     const getImage = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/products/${id}/images`
+          urlToImages
         );
         if (!response || !response.data.length === 0) return;
         setImages(response.data);

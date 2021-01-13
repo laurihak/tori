@@ -95,7 +95,7 @@ const Pagination = ({
   );
 };
 const ProductList = ({ searchClick, searchWord, searchLocation }) => {
-  const [list, setList] = useState([]);
+  const [list, setList] = useState(null);
   const [page, setPage] = useState(1);
 
   console.log("page in productlist", page);

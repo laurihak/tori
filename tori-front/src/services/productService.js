@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseUrl = process.env.REACT_APP_API_URL;
+const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:4000/api"
 let token = null;
 
 const setToken = (newToken) => {
@@ -17,6 +17,7 @@ const getPages = async (searchWord, location) => {
   return response.data;
 };
 const getAll = async (searchWord, location, page) => {
+  console.log('baseurl now: ', baseUrl)
   console.log("searchword now", searchWord);
   const config = {
     params: { searchWord: searchWord, location: location, page: page },

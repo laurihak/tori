@@ -20,7 +20,7 @@ const App = () => {
 
   useEffect(() => {
     const getCachedUser = async () => {
-      const cachedUser = await localStorage.getItem("loggedInUser");
+      const cachedUser = localStorage.getItem("loggedInUser");
       const userJson = JSON.parse(cachedUser);
       setUser(userJson);
       if (!userJson) return productService.setToken(null);

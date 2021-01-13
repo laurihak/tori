@@ -2,27 +2,25 @@ import { useHistory } from "react-router-dom";
 import "./Login.css";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
+import loginService from "../../services/loginService";
 
 const signUpSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email required"),
   password: Yup.string().min(4, "Too short!").required("Password required"),
 });
 
-const API_URL = process.env.REACT_APP_API_URL;
-
 const Login = ({ setLogInfo }) => {
   const history = useHistory();
   const handleSubmit = async ({ values }) => {
     try {
-      const response = await axios.post(`${API_URL}/login`, {
+      const response = await loginService.login({
         email: values.email,
         password: values.password,
       });
-      if (response.data.token) {
+      if (response.token) {
         window.localStorage.setItem(
           "loggedInUser",
-          JSON.stringify(response.data)
+          JSON.stringify(response)
         );
         setLogInfo(true);
         history.push("/product-list");

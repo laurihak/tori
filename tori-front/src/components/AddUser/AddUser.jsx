@@ -3,8 +3,7 @@ import { useHistory } from "react-router-dom";
 import { Formik } from "formik";
 
 import * as Yup from "yup";
-import axios from "axios";
-
+import userService from "../../services/userService";
 const userSchema = Yup.object().shape({
   username: Yup.string(),
   name: Yup.string(),
@@ -12,14 +11,13 @@ const userSchema = Yup.object().shape({
   password: Yup.string().required(),
 });
 
-const API_URL = process.env.REACT_APP_API_URL;
 const AddUser = () => {
   const history = useHistory();
 
   const handleSubmit = async ({ values }) => {
     console.log("values now: ", values);
-    const response = await axios.post(`${API_URL}/users`, values);
-    const id = response.data.id;
+    const response = await userService.createUser(values);
+    const id = response.id;
     console.log("submitting product to db");
     history.push(`/products/${id}`);
   };

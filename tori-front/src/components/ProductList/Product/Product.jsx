@@ -10,6 +10,7 @@ import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:4000/api"
 const useStyles = makeStyles({
   root: {
     display: "flex",
@@ -35,11 +36,11 @@ const Product = ({ product }) => {
   };
 
   useEffect(() => {
-    console.log("useeffetct in product");
+    console.log("useffetct in product");
     const getImages = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/products/${product.id}/images`
+          `${baseUrl}/products/${product.id}/images`
         );
         if (!response || !response.data.length === 0) return;
         setImages(response.data);
