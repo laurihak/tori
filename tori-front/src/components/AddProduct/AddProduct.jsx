@@ -17,12 +17,12 @@ import {
 import { useState } from "react";
 
 const productSchema = Yup.object().shape({
-  productName: Yup.string().required(),
-  sellerName: Yup.string().required(),
-  price: Yup.number().required(),
-  location: Yup.string().required(),
-  address: Yup.string().required(),
-  sellType: Yup.string().required(),
+  productName: Yup.string().required("Tuotteen nimi vaaditaan"),
+  sellerName: Yup.string().required("Myyjän nimi vaaditaan"),
+  price: Yup.number("Hinnan täytyy olla numero").required("Hinta vaaditaan"),
+  location: Yup.string().required("Paikka vaaditaan"),
+  address: Yup.string().required("Osoite vaaditaan"),
+  sellType: Yup.string().required("Myyntitapa vaaditaan"),
   description: Yup.string(),
 });
 
@@ -30,13 +30,13 @@ const makeData = async (file, user) => {
   var i;
   for (i = 0; i < 100; i++) {
     const newProduct = {
-      product_name: generateProductName(),
-      seller_name: generateSellerName(),
-      seller_id: user.id,
+      productName: generateProductName(),
+      sellerName: generateSellerName(),
+      sellerId: user.id,
       price: Math.floor(Math.random() * 1000 + 1),
       location: generateLocation(),
       address: generateAddress(),
-      sell_type: generateSellType(),
+      sellType: generateSellType(),
       description: generateDescription(),
     };
     const response = await productService.create(newProduct, user);
@@ -92,11 +92,14 @@ const AddProduct = ({ user }) => {
   const history = useHistory();
 
   const handleSubmit = async ({ values }) => {
-    const response = await productService.create(values, user);
-    if (!response) window.alert("Tuotteen lisäys ei onnistunut!");
-    const id = response.id;
-    if (window.confirm("Tuotteen lisäys onnistui!"))
-      history.push(`/products/${id}`);
+    try {
+      const response = await productService.create(values, user);
+      const id = response.id;
+      if (window.confirm("Tuotteen lisäys onnistui!"))
+        history.push(`/products/${id}`);
+    } catch (e) {
+      window.alert(e.response.data.message);
+    }
   };
   if (!user) {
     return <div>No user found no authorization to add product</div>;
@@ -113,12 +116,12 @@ const AddProduct = ({ user }) => {
 
         <Formik
           initialValues={{
-            product_name: "",
-            seller_name: seller,
+            productName: "",
+            sellerName: seller,
             price: "",
             location: "",
             address: "",
-            sell_type: "",
+            sellType: "",
             description: "",
           }}
           validationSchema={productSchema}
@@ -150,12 +153,17 @@ const AddProduct = ({ user }) => {
                 <input
                   className="Input"
                   type="string"
-                  name="product_name"
+                  name="productName"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  value={values.product_name}
+                  value={values.productName}
                   placeholder="Tuotteen nimi"
                 />
+                <div className="Error">
+                  {errors.productName &&
+                    touched.productName &&
+                    errors.productName}
+                </div>
               </div>
 
               <div className="Input-container-product">
@@ -163,12 +171,16 @@ const AddProduct = ({ user }) => {
                 <input
                   className="Input"
                   type="string"
-                  name="seller_name"
+                  name="sellerName"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  value={values.seller_name}
+                  value={values.sellerName}
                   placeholder="Myyjan nimi"
                 />
+
+                <div className="Error">
+                  {errors.sellerName && touched.sellerName && errors.sellerName}
+                </div>
               </div>
               <div className="Input-container-product">
                 <label>Tuotteen hinta: </label>
@@ -181,10 +193,16 @@ const AddProduct = ({ user }) => {
                   value={values.price}
                   placeholder="Hinta"
                 />
+                <div className="Error">
+                  {errors.price && touched.price && errors.price}
+                </div>
               </div>
               <div className="Input-container-product">
                 <label>Kaupunki: </label>
                 <select className="Input">{locationOptionsHtml}</select>
+                <div className="Error">
+                  {errors.location && touched.location && errors.location}
+                </div>
               </div>
               <div className="Input-container-product">
                 <label>Osoite: </label>
@@ -197,6 +215,9 @@ const AddProduct = ({ user }) => {
                   value={values.address}
                   placeholder="Osoite"
                 />
+                <div className="Error">
+                  {errors.address && touched.address && errors.address}
+                </div>
               </div>
               <div className="Input-container-product">
                 <label>Myynti tapa: </label>
@@ -213,20 +234,15 @@ const AddProduct = ({ user }) => {
                   value={values.description}
                   placeholder="Lisatietoja"
                 />
+                <div className="Error">
+                  {errors.description &&
+                    touched.description &&
+                    errors.description}
+                </div>
               </div>
               <button className="Button" type="submit" disabled={isSubmitting}>
                 Lisää ilmoitus
               </button>
-              <div>
-                {errors.product_name &&
-                  touched.product_name &&
-                  errors.product_name}
-              </div>
-              <div>
-                {errors.seller_name &&
-                  touched.seller_name &&
-                  errors.seller_name}
-              </div>
             </form>
           )}
         </Formik>

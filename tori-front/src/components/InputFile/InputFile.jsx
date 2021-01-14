@@ -61,7 +61,7 @@ const InputFile = ({ file, setFile }) => {
         )}
         <div className="button-wrap">
           <label className="Choose-file-button" htmlFor="upload">
-            Choose file
+            Valitse tiedosto
           </label>
           <input
             accept="image/jpeg"
@@ -71,7 +71,7 @@ const InputFile = ({ file, setFile }) => {
             onChange={(event) => handleChange(event)}
           />
         </div>
-        <label
+        {/* <label
           className="Upload-photo-button"
           onClick={uploadPhoto}
           accept="image/jpeg"
@@ -81,7 +81,7 @@ const InputFile = ({ file, setFile }) => {
         </label>
         <div style={{ marginTop: "15px" }}>
           File name: {!file ? "not found" : file.name}
-        </div>
+        </div> */}
       </div>
     </div>
   );

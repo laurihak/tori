@@ -130,11 +130,18 @@ productsRouter.post("/", async (req, res) => {
   const headers = req.headers;
   const date = new Date();
   date.setHours(date.getHours() + 4);
-  // checkProduct(product)
+  console.log("product body", req.body);
   const productToAdd = {
     id: uuidv4(),
     input_date: date.toISOString(),
-    ...product,
+    seller_name: product.sellerName,
+    seller_id: product.seller_id,
+    product_name: product.productName,
+    price: product.price,
+    location: product.location,
+    address: product.address,
+    sell_type: product.sellType,
+    description: product.description,
   };
   const response = await insertProduct(productToAdd);
   if (!response) return res.status(400).end();
