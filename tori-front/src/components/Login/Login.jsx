@@ -17,14 +17,12 @@ const Login = ({ setLogInfo }) => {
         email: values.email,
         password: values.password,
       });
-      console.log(response);
       if (response.token) {
         window.localStorage.setItem("loggedInUser", JSON.stringify(response));
         setLogInfo(true);
         history.push("/product-list");
       }
     } catch (e) {
-      console.log(e.response.data.message);
       window.alert(e.response.data.message);
     }
   };
@@ -37,7 +35,6 @@ const Login = ({ setLogInfo }) => {
         validateOnBlur={false}
         validateOnChange={false}
         onSubmit={(values, { setSubmitting }) => {
-          // event.preventDefault();
           handleSubmit({ values });
           setSubmitting(false);
         }}

@@ -17,12 +17,12 @@ import {
 import { useState } from "react";
 
 const productSchema = Yup.object().shape({
-  productName: Yup.string(),
-  sellerName: Yup.string(),
-  price: Yup.string(),
-  location: Yup.string(),
-  address: Yup.string(),
-  sellType: Yup.string(),
+  productName: Yup.string().required(),
+  sellerName: Yup.string().required(),
+  price: Yup.number().required(),
+  location: Yup.string().required(),
+  address: Yup.string().required(),
+  sellType: Yup.string().required(),
   description: Yup.string(),
 });
 
@@ -39,7 +39,6 @@ const makeData = async (file, user) => {
       sell_type: generateSellType(),
       description: generateDescription(),
     };
-    console.log("adding this product: ", newProduct);
     const response = await productService.create(newProduct, user);
     if (!response) return;
     const id = response.id;
@@ -95,7 +94,6 @@ const AddProduct = ({ user }) => {
   const handleSubmit = async ({ values }) => {
     const response = await productService.create(values, user);
     if (!response) window.alert("Tuotteen lisäys ei onnistunut!");
-    console.log("response now", response);
     const id = response.id;
     if (window.confirm("Tuotteen lisäys onnistui!"))
       history.push(`/products/${id}`);
@@ -161,7 +159,7 @@ const AddProduct = ({ user }) => {
               </div>
 
               <div className="Input-container-product">
-                <label>Myyjan nimi: </label>
+                <label>Myyjän nimi: </label>
                 <input
                   className="Input"
                   type="string"
@@ -205,7 +203,7 @@ const AddProduct = ({ user }) => {
                 <select className="Input">{sellOptionsHtml}</select>
               </div>
               <div className="Input-container-product">
-                <label>Lisatietoja tuotteesta: </label>
+                <label>Lisätietoja tuotteesta: </label>
                 <textarea
                   className="Input-description"
                   type="string"
@@ -217,7 +215,7 @@ const AddProduct = ({ user }) => {
                 />
               </div>
               <button className="Button" type="submit" disabled={isSubmitting}>
-                Lisaa ilmoitus
+                Lisää ilmoitus
               </button>
               <div>
                 {errors.product_name &&

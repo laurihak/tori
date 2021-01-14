@@ -5,7 +5,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN npm ci && npm run build
+RUN npm ci --only=production && npm run build
 
 FROM nginx:1.18
 COPY --from=build-stage /app/build /usr/share/nginx/html

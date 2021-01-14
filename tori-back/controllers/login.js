@@ -1,12 +1,9 @@
 const loginRouter = require("express").Router();
 const bcrypt = require("bcryptjs");
-const { json } = require("body-parser");
-const { response } = require("express");
 const jwt = require("jsonwebtoken");
 const { getUserByName, getUserByEmail } = require("../models/users");
 
 loginRouter.post("/", async (req, res) => {
-  console.log("body now ", req.body);
   let user = null;
   if (!req.body.email) {
     user = await getUserByName(req.body.username);
@@ -38,14 +35,12 @@ loginRouter.post("/", async (req, res) => {
     };
 
     const token = jwt.sign(userForToken, process.env.SECRET);
-    console.log("token now", token);
     const jsonToSend = {
       token,
       email: user.email,
       name: user.name,
       id: user.id,
     };
-    console.log(jsonToSend);
     res.status(200).set("Content-type", "application/json").json(jsonToSend);
   }
 });
@@ -54,9 +49,7 @@ const comparePassword = async (password, hash) => {
   try {
     // Compare password
     return await bcrypt.compare(password, hash);
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
   return false;
 };
 

@@ -89,7 +89,6 @@ const getProductsWithFilters = async (searchWord, location, page) => {
       console.log(e.message);
     }
   } else if ((searchWord && !location) || location === "kaikki") {
-    console.log("searchword like");
     try {
       const response = await knex("products")
         .where(knex.raw(`LOWER("description") like  ?`, `%${searchWord}%`))

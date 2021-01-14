@@ -26,8 +26,6 @@ const Product = ({ user }) => {
 
   const [images, setImages] = useState([]);
 
-  console.log("API URL NOW ", API_URL);
-
   const onDelete = async () => {
     if (!window.confirm(`Are you sure you want to delete ${product.name}?`))
       return;
@@ -37,7 +35,6 @@ const Product = ({ user }) => {
   };
 
   const onEdit = async () => {
-    console.log("edit clicked");
   };
 
   useEffect(() => {
@@ -45,11 +42,11 @@ const Product = ({ user }) => {
       try {
         const response = await productService.getById(id);
         if (!response) {
-          console.log("error fetching product with id");
+          window.alert("Tuotetta ei löytynyt");
         }
         setProduct(response);
       } catch (e) {
-        console.log(e.message);
+        window.alert(e.response.data.message);
       }
     };
     getProduct();
@@ -62,7 +59,7 @@ const Product = ({ user }) => {
         if (!response || !response.length === 0) return;
         setImages(response);
       } catch (e) {
-        console.log(e.message);
+        window.alert(e.response.data.message);
       }
     };
     getImages();
@@ -76,10 +73,8 @@ const Product = ({ user }) => {
   let descriptionHtml;
   if (product.description) {
     descriptionHtml = product.description.replace(/(?:\r\n|\r|\n)/g, "<br>");
-    console.log("descriptionHtml", descriptionHtml);
   }
 
-  console.log("product now", product);
   if (user && product && user.id === product.seller_id) {
     return (
       <div className="Container-product-page">

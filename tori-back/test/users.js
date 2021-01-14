@@ -54,7 +54,7 @@ describe("users", () => {
 
       let i = 0;
       for (i = 0; i < 3; i++) {
-        await insertUser({...correctUser, username: i, id: uuidv4() });
+        await insertUser({ ...correctUser, username: i, id: uuidv4() });
       }
       const usersAfter = await getUsers();
       expect(usersAfter).to.be.an("array").length(1);

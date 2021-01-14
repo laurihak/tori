@@ -15,12 +15,11 @@ const AddUser = () => {
   const history = useHistory();
 
   const handleSubmit = async ({ values }) => {
-    console.log("values now: ", values);
     const response = await userService.createUser(values);
-    if (!response) return window.alert("Käyttäjää ei voitu lisätä")
+    if (!response) return window.alert("Käyttäjää ei voitu lisätä");
+    window.alert("Käyttäjä luotiin onnistuneesti");
     const id = response.id;
-    console.log("submitting product to db");
-    history.push(`/products/${id}`);
+    history.push(`/login`);
   };
   return (
     <div className="Container">

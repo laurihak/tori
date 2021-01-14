@@ -20,7 +20,7 @@ const InputFile = ({ file, setFile }) => {
     try {
       productService.insertImage(id, file);
     } catch (e) {
-      console.log(e.message);
+      window.alert(e.response.data.message);
     }
   };
 
@@ -31,13 +31,12 @@ const InputFile = ({ file, setFile }) => {
         if (!response || !response.length === 0) return;
         setImages(response);
       } catch (e) {
-        console.log(e.message);
+        window.alert(e.response.data.message);
       }
     };
     getImage();
   }, [id]);
 
-  console.log("images now ", images);
   return (
     <div className="Container">
       <div className="Container-add-photo">

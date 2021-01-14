@@ -48,3 +48,17 @@ CREATE TABLE users (
     name VARCHAR(100) NOT NULL,
     password_hash VARCHAR(100) NOT NULL
 );
+INSERT INTO users (
+        id,
+        username,
+        email,
+        name,
+        password_hash
+    )
+values(
+        'f0fc849e-cc63-425c-be02-90acdebde0fa',
+        'testikäyttäjä',
+        'test@hotmail.com',
+        'testinimi',
+        '$2a$10$8PsEqHY5CKOE6ofHJSX1eeuCJPvhU8Y7EX1hAvEsWFA3ScTR/gYNa'
+    );

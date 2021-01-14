@@ -29,7 +29,6 @@ const App = () => {
     getCachedUser();
   }, [logInfo]);
 
-  console.log("haku lokaatio", filters);
   return (
     <Router>
       <div className="App">

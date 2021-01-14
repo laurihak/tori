@@ -11,22 +11,17 @@ const ProductList = ({ filters }) => {
   const [list, setList] = useState(null);
   const [page, setPage] = useState(1);
 
-  console.log("page in productlist", page);
-
   useEffect(() => {
     const getList = async () => {
       let products;
-      console.log("searchquery in ", filters);
 
       products = await productService.getAll(filters, page);
 
       if (!products) {
-        console.log("products not found");
+        window.alert("Tuotteita ei löytynyt");
       }
-      console.log(products);
       setList(products);
     };
-    console.log("searching now");
     getList();
   }, [filters, page]);
 
