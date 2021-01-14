@@ -14,9 +14,9 @@ Jotta voit suorittaa paikallisesti, sinulla on oltava docker and docker-compose 
 
 Käytä terminaalista vain 'docker-compose up', se kestää noin muutaman minuutin, ennenkuin docker kuvat on rakennettu ja käynnistyneet.
 
-Backend-URL on tällä hetkellä kovakoodattu osoitteeseen http: // localhost: 4000 / api
+Backend-URL on tällä hetkellä kovakoodattu osoitteeseen http://ocalhost:4000/api
 
-Sovellus on saatavana osoitteesta http: // localhost
+Sovellus on saatavana osoitteesta http://localhost:8080
 
 Olen tehnyt valmiin käyttäjän, kirjautumistiedot sähköposti: testi@hotmail.com, salasana: testi. Sinun pitäisi pystyä kirjautumaan tämän käyttäjän kanssa tai voit luoda oman.
 
@@ -50,7 +50,7 @@ From terminal just use docker-compose up, it will take approx couple of minutes 
 
 Backend url is currently hardcoded to http://localhost:4000/api
 
-Application will be available at http://localhost
+Application will be available at http://localhost:8080
 
 I have made initdb user with credentials email: testi@hotmail.com, password: testi. You should be able to login with this user, or you can create your own.
 
