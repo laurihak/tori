@@ -10,6 +10,7 @@ loginRouter.post("/", async (req, res) => {
   } else {
     user = await getUserByEmail(req.body.email);
   }
+  console.log("body", req.body)
 
   if (!user) {
     res
@@ -19,6 +20,7 @@ loginRouter.post("/", async (req, res) => {
       })
       .end();
   }
+  console.log(user)
   const password = req.body.password;
   const hash = user.password_hash;
   if ((await comparePassword(password, hash)) === false) {

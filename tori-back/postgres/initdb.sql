@@ -58,7 +58,7 @@ INSERT INTO users (
 values(
         'f0fc849e-cc63-425c-be02-90acdebde0fa',
         'testikäyttäjä',
-        'test@hotmail.com',
+        'testi@hotmail.com',
         'testinimi',
         '$2a$10$8PsEqHY5CKOE6ofHJSX1eeuCJPvhU8Y7EX1hAvEsWFA3ScTR/gYNa'
     );
