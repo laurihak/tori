@@ -44,8 +44,8 @@ const Pagination = ({ page, setPage, filters }) => {
   return (
     <div className="Pagination-container">
       <div className="Pagination-number-container">
-        <p className="Pagination-total-count">Tuotteiden maara: {totalItems}</p>
-        <p className="Pagination-total-count">Sivumaara: {totalPages}</p>
+        <p className="Pagination-total-count">Tuotteiden määrä: {totalItems}</p>
+        <p className="Pagination-total-count">Sivumäärä: {totalPages}</p>
       </div>
       <ul className="Pagination">
         <li

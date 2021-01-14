@@ -28,7 +28,6 @@ function generateSellerName() {
     name1[getRandomInt(0, name1.length)] +
     " " +
     name2[getRandomInt(0, name2.length)];
-  console.log(name);
   return name;
 }
 function generateProductName() {
@@ -44,7 +43,6 @@ function generateProductName() {
   ];
 
   let name = name1[getRandomInt(0, name1.length)];
-  console.log(name);
   return name;
 }
 function generateLocation() {
@@ -71,7 +69,6 @@ function generateLocation() {
   ];
 
   let name = name1[getRandomInt(0, name1.length)];
-  console.log(name);
   return name;
 }
 
@@ -99,7 +96,6 @@ function generateAddress() {
   ];
 
   let name = name1[getRandomInt(0, name1.length)];
-  console.log(name);
   return name;
 }
 
@@ -107,7 +103,6 @@ function generateSellType() {
   const name1 = ["Posti", "Nouto"];
 
   let name = name1[getRandomInt(0, name1.length)];
-  console.log(name);
   return name;
 }
 
@@ -126,7 +121,6 @@ function generateDescription() {
   ];
 
   let name = name1[getRandomInt(0, name1.length)];
-  console.log("description", name);
   return name;
 }
 

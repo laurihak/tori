@@ -30,19 +30,17 @@ const Product = ({ product }) => {
   const history = useHistory();
 
   const handleClick = () => {
-    console.log("handling click");
     history.push(`/products/${product.id}`);
   };
 
   useEffect(() => {
-    console.log("useffect in product");
     const getImages = async () => {
       try {
         const response = await imageService.getImagesWithProductId(product.id);
         if (!response || !response.length === 0) return;
         setImages(response);
       } catch (e) {
-        console.log(e.message);
+        window.alert(e.response.data.message);
       }
     };
     getImages();

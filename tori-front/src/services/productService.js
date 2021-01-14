@@ -17,7 +17,6 @@ const getPages = async (filters) => {
   return response.data;
 };
 const getAll = async (filters, page) => {
-  console.log("baseurl now: ", baseUrl);
   const config = {
     params: {
       location: filters.location,
@@ -40,7 +39,6 @@ const create = async (newObject, user) => {
   };
   newObject = { seller_id: user.id, ...newObject };
   const response = await axios.post(`${baseUrl}/products`, newObject, config);
-  console.log(response);
   return response.data;
 };
 
@@ -66,7 +64,6 @@ const getImages = async (id) => {
 };
 
 const insertImage = async (id, file) => {
-  console.log("file here", file);
   const config = {
     headers: { Authorization: token, "content-type": "multipart/form-data" },
   };

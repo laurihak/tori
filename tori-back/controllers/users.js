@@ -24,7 +24,6 @@ userRouter.get("/:id", async (req, res) => {
 userRouter.post("/", async (req, res) => {
   const body = req.body;
 
-  console.log("body now", body);
   const saltRounds = 10;
   const passwordHash = await bcrypt.hash(body.password, saltRounds);
 
@@ -37,7 +36,7 @@ userRouter.post("/", async (req, res) => {
   };
 
   await insertUser(newUser);
-  res.status(201).end();
+  res.status(201).json({ message: "User created succesfully" });
 });
 userRouter.put("/:id", (req, res) => {});
 userRouter.delete("/:id", (req, res) => {});

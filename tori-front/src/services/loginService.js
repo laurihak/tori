@@ -11,7 +11,6 @@ const login = async (values) => {
     email: values.email,
     password: values.password,
   });
-  console.log('response', response);
   return response.data;
 };
 

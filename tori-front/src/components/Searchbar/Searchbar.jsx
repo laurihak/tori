@@ -101,7 +101,6 @@ const Searchbar = ({ setFilters }) => {
                   searchWord: searchWord,
                   location: searchLocation,
                 });
-                console.log("clickerino and ", searchWord);
               }}
             >
               Hae

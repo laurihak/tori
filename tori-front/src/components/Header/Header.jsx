@@ -31,7 +31,7 @@ const Header = ({ user, setLogInfo }) => {
       <header className="App-header">
         <div className="Header-container">
           <div className="Header-logo" onClick={handleClickOnLogo}>
-            Logo
+            Etusivu
           </div>
           <div className="Header-item" onClick={handleClickOnProducts}>
             Ilmoitukset
@@ -40,14 +40,14 @@ const Header = ({ user, setLogInfo }) => {
         <div className="Header-container">
           {user ? null : (
             <div className="Header-item" onClick={handleClickOnAddUser}>
-              Tee kayttaja
+              Tee käyttäjä
             </div>
           )}
 
           {user ? (
             <>
               <div className="Header-item" onClick={handleClickOnAddProduct}>
-                Lisaa ilmoitus
+                Lisää ilmoitus
               </div>
               <div className="Header-login" onClick={handleClickOnLogOut}>
                 Kirjaudu ulos
