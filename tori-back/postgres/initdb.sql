@@ -1,13 +1,14 @@
 CREATE TABLE products (
     index SERIAL,
     id varchar(100),
-    product_name varchar(50),
     seller_name varchar(50),
+    seller_id varchar(50),
+    product_name varchar(50),
     price integer,
     location varchar(50),
     address varchar(50),
     sell_type varchar(50),
-    description varchar(2000),
+    description varchar(4000) NOT NULL,
     input_date timestamp
 );
 -- INSERT INTO products (

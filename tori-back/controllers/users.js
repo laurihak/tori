@@ -1,5 +1,5 @@
 const userRouter = require("express").Router();
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const { response } = require("express");
 const { v4: uuidv4 } = require("uuid");
 

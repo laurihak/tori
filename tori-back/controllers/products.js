@@ -37,7 +37,6 @@ productsRouter.get("/pages", async (req, res) => {
   return res.send(pages);
 });
 
-
 productsRouter.get("/:id", async (req, res) => {
   const id = req.params.id;
   const product = await getProduct(id);
@@ -91,14 +90,16 @@ productsRouter.get("/:id/images/:id_image", async (req, res) => {
   res.send({ pic: string });
 });
 
-productsRouter.post("/:id/images/", upload.single("avatar"), (req, res) => {
+productsRouter.post("/:id/images", upload.single("avatar"), (req, res) => {
   const product_id = req.params.id;
+  console.log("reqfile: ", req.file);
   const image = {
     id: uuidv4(),
     product_id: product_id,
     image_name: req.file.originalname.replace(/\s/g, ""),
     image_data: fs.readFileSync(req.file.path),
   };
+  console.log("image now");
   if (!image) return res.status(400).end();
   fs.unlinkSync(req.file.path);
   console.log(image);
@@ -124,7 +125,7 @@ productsRouter.get("/", async (req, res) => {
   products = await getProductsWithFilters(searchWord, location, page);
   return res.send(products);
 });
-productsRouter.post("/", (req, res) => {
+productsRouter.post("/", async (req, res) => {
   const product = req.body;
   const headers = req.headers;
   // checkProduct(product)
@@ -133,7 +134,9 @@ productsRouter.post("/", (req, res) => {
     input_date: "2017-03-31T06:30:20.000Z",
     ...product,
   };
-  insertProduct(productToAdd);
+  const response = await insertProduct(productToAdd);
+  console.log("response", response);
+  if (!response) return res.status(400).end();
   return res.status(200).send(productToAdd);
 });
 

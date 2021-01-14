@@ -1,5 +1,5 @@
 const loginRouter = require("express").Router();
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const { json } = require("body-parser");
 const { response } = require("express");
 const jwt = require("jsonwebtoken");
@@ -36,7 +36,12 @@ loginRouter.post("/", async (req, res) => {
 
     const token = jwt.sign(userForToken, process.env.SECRET);
     console.log("token now", token);
-    const jsonToSend = { token, email: user.email, name: user.name };
+    const jsonToSend = {
+      token,
+      email: user.email,
+      name: user.name,
+      id: user.id,
+    };
     console.log(jsonToSend);
     res.status(200).set("Content-type", "application/json").send(jsonToSend);
   }
