@@ -1,5 +1,6 @@
 import "./Searchbar.css";
 import "../../App.css";
+import { useState } from "react";
 
 const locationOptions = [
   // "Kaikki",
@@ -35,7 +36,14 @@ const locationOptionsHtml = locationOptions.sort().map((o, i) => (
   </option>
 ));
 
-const tuoteOptions = ["Kaikki", "Autot", "Puhelimet", "Kellot", "Pyorat", "Tietokoneet"];
+const tuoteOptions = [
+  "Kaikki",
+  "Autot",
+  "Puhelimet",
+  "Kellot",
+  "Pyorat",
+  "Tietokoneet",
+];
 const tuoteOptionsHtml = tuoteOptions.map((o, i) => (
   <option key={i} value={o}>
     {o}
@@ -50,12 +58,10 @@ const checkOptionsHtml = checkOptions.map((o, i) => (
   </div>
 ));
 
-const Searchbar = ({
-  searchWord,
-  setSearchWord,
-  setSearchLocation,
-  setSearchClick,
-}) => {
+const Searchbar = ({ setFilters }) => {
+  const [searchLocation, setSearchLocation] = useState("");
+  const [searchWord, setSearchWord] = useState("");
+
   return (
     <div className="Container">
       <form className="Wrapper-searchbar">
@@ -91,8 +97,11 @@ const Searchbar = ({
               type="submit"
               onClick={(e) => {
                 e.preventDefault();
+                setFilters({
+                  searchWord: searchWord,
+                  location: searchLocation,
+                });
                 console.log("clickerino and ", searchWord);
-                setSearchClick(e);
               }}
             >
               Hae

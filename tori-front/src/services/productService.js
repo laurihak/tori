@@ -1,26 +1,29 @@
 import axios from "axios";
-const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:4000/api"
+const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:4000/api";
 let token = null;
 
 const setToken = (newToken) => {
   token = `bearer ${newToken}`;
 };
 
-const getPages = async (searchWord, location) => {
+const getPages = async (filters) => {
   const config = {
-    params: { searchWord: searchWord, location: location },
+    params: {
+      location: filters.location,
+      searchWord: filters.searchWord,
+    },
   };
-  const response = await axios.get(
-    `${baseUrl}/products/pages`,
-    config
-  );
+  const response = await axios.get(`${baseUrl}/products/pages`, config);
   return response.data;
 };
-const getAll = async (searchWord, location, page) => {
-  console.log('baseurl now: ', baseUrl)
-  console.log("searchword now", searchWord);
+const getAll = async (filters, page) => {
+  console.log("baseurl now: ", baseUrl);
   const config = {
-    params: { searchWord: searchWord, location: location, page: page },
+    params: {
+      location: filters.location,
+      searchWord: filters.searchWord,
+      page: page,
+    },
   };
   const response = await axios.get(`${baseUrl}/products`, config);
   return response.data;
@@ -31,11 +34,13 @@ const getById = async (id) => {
   return response.data;
 };
 
-const create = async (newObject) => {
+const create = async (newObject, user) => {
   const config = {
     headers: { Authorization: token },
   };
+  newObject = { seller_id: user.id, ...newObject };
   const response = await axios.post(`${baseUrl}/products`, newObject, config);
+  console.log(response);
   return response.data;
 };
 

@@ -8,9 +8,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import "./Product.css";
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import imageService from "../../../services/imageService";
 
-const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:4000/api"
 const useStyles = makeStyles({
   root: {
     display: "flex",
@@ -36,14 +35,12 @@ const Product = ({ product }) => {
   };
 
   useEffect(() => {
-    console.log("useffetct in product");
+    console.log("useffect in product");
     const getImages = async () => {
       try {
-        const response = await axios.get(
-          `${baseUrl}/products/${product.id}/images`
-        );
-        if (!response || !response.data.length === 0) return;
-        setImages(response.data);
+        const response = await imageService.getImagesWithProductId(product.id);
+        if (!response || !response.length === 0) return;
+        setImages(response);
       } catch (e) {
         console.log(e.message);
       }
@@ -78,7 +75,12 @@ const Product = ({ product }) => {
         </div>
         <div className="Right">
           {!images ? null : (
-            <img className="Media" src={images[0]} title="not found" />
+            <img
+              className="Media"
+              src={images[0]}
+              title="not found"
+              alt="not found"
+            />
           )}
         </div>
       </CardContent>

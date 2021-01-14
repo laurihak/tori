@@ -7,16 +7,16 @@ import Searchbar from "./components/Searchbar/Searchbar";
 import ProductPage from "./components/ProductPage/ProductPage";
 import AddProduct from "./components/AddProduct/AddProduct";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import InputFile from "./components/InputFile/InputFile";
 import AddUser from "./components/AddUser/AddUser";
 
 import productService from "./services/productService";
 const App = () => {
   const [user, setUser] = useState(null);
   const [logInfo, setLogInfo] = useState(null);
-  const [searchLocation, setSearchLocation] = useState("Kaikki");
-  const [searchWord, setSearchWord] = useState("");
-  const [searchClick, setSearchClick] = useState(null);
+  const [filters, setFilters] = useState({
+    location: "kaikki",
+    searchWord: "",
+  });
 
   useEffect(() => {
     const getCachedUser = async () => {
@@ -29,27 +29,18 @@ const App = () => {
     getCachedUser();
   }, [logInfo]);
 
-  console.log("haku lokaatio", searchLocation);
+  console.log("haku lokaatio", filters);
   return (
     <Router>
       <div className="App">
         <Header user={user} setLogInfo={setLogInfo}></Header>
         <Switch>
           <Route path="/products/:id">
-            <ProductPage></ProductPage>
+            <ProductPage user={user}></ProductPage>
           </Route>
           <Route path="/product-list">
-            <Searchbar
-              searchWord={searchWord}
-              setSearchWord={setSearchWord}
-              setSearchLocation={setSearchLocation}
-              setSearchClick={setSearchClick}
-            ></Searchbar>
-            <ProductList
-              searchWord={searchWord}
-              searchLocation={searchLocation}
-              searchClick={searchClick}
-            ></ProductList>
+            <Searchbar setFilters={setFilters}></Searchbar>
+            <ProductList filters={filters}></ProductList>
           </Route>
           <Route path="/add-product">
             <AddProduct user={user}></AddProduct>

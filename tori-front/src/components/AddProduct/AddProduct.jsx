@@ -4,7 +4,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 
 import productService from "../../services/productService";
-
+import InputFile from "../InputFile/InputFile";
 import {
   generateSellerName,
   generateProductName,
@@ -14,101 +14,7 @@ import {
   generateDescription,
 } from "./makedata";
 
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import axios from "axios";
-
-const InputFile = ({ file, setFile }) => {
-  const { id } = useParams();
-
-  const [images, setImages] = useState([]);
-
-  const urlToImages = `http://localhost:4000/api/products/${id}/images`;
-
-  const handleChange = (event) => {
-    setFile(event.target.files[0]);
-  };
-  const fileFromServer = require("../AddProduct/images/test.jpeg").default;
-
-  console.log("file in change inputfile", file);
-  console.log("file in change but from server", fileFromServer);
-
-  const uploadPhoto = async (event) => {
-    if (!file) {
-      return;
-    }
-    try {
-      productService.insertImage(id, file);
-    } catch (e) {
-      console.log(e.message);
-    }
-  };
-
-  useEffect(() => {
-    const getImage = async () => {
-      try {
-        const response = await axios.get(
-          urlToImages
-        );
-        if (!response || !response.data.length === 0) return;
-        setImages(response.data);
-      } catch (e) {
-        console.log(e.message);
-      }
-    };
-    getImage();
-  }, [id]);
-
-  console.log("images now ", images);
-  return (
-    <div className="Container">
-      <div className="Container-add-photo">
-        <div className="Container-preview-photos">
-          {!images
-            ? null
-            : images.map((img, i) => (
-                <img
-                  key={i}
-                  className="Product-photos"
-                  src={img}
-                  alt="not found"
-                />
-              ))}
-        </div>
-        {!file ? null : (
-          <img
-            className="Photo-preview"
-            src={URL.createObjectURL(file)}
-            alt="not found"
-          />
-        )}
-        <div className="button-wrap">
-          <label className="Choose-file-button" htmlFor="upload">
-            Choose file
-          </label>
-          <input
-            accept="image/jpeg"
-            id="upload"
-            type="file"
-            name="file"
-            onChange={(event) => handleChange(event)}
-          />
-        </div>
-        <label
-          className="Upload-photo-button"
-          onClick={uploadPhoto}
-          accept="image/jpeg"
-          name="file"
-        >
-          Upload
-        </label>
-        <div style={{ marginTop: "15px" }}>
-          File name: {!file ? "not found" : file.name}
-        </div>
-      </div>
-    </div>
-  );
-};
+import { useState } from "react";
 
 const productSchema = Yup.object().shape({
   productName: Yup.string(),
@@ -120,22 +26,28 @@ const productSchema = Yup.object().shape({
   description: Yup.string(),
 });
 
-const makeData = async (file) => {
+const makeData = async (file, user) => {
   var i;
   for (i = 0; i < 100; i++) {
     const newProduct = {
       product_name: generateProductName(),
       seller_name: generateSellerName(),
+      seller_id: user.id,
       price: Math.floor(Math.random() * 1000 + 1),
       location: generateLocation(),
       address: generateAddress(),
       sell_type: generateSellType(),
       description: generateDescription(),
     };
-    const response = await productService.create(newProduct);
+    console.log("adding this product: ", newProduct);
+    const response = await productService.create(newProduct, user);
     if (!response) return;
     const id = response.id;
-    const responseImage = await productService.insertImage(id, file);
+    let i = 0;
+    for (i = 0; i < 50; i++) {
+      const responseImage = await productService.insertImage(id, file);
+      if (!responseImage) window.alert("error inserting image");
+    }
   }
 };
 
@@ -161,7 +73,15 @@ const locationOptions = [
   "Ahvenanmaa",
 ];
 
+const sellOptions = ["Nouto", "Lähetys"];
+
 const locationOptionsHtml = locationOptions.sort().map((o, i) => (
+  <option key={i} value={o}>
+    {o}
+  </option>
+));
+
+const sellOptionsHtml = sellOptions.sort().map((o, i) => (
   <option key={i} value={o}>
     {o}
   </option>
@@ -173,9 +93,12 @@ const AddProduct = ({ user }) => {
   const history = useHistory();
 
   const handleSubmit = async ({ values }) => {
-    const response = productService.create(values);
+    const response = await productService.create(values, user);
+    if (!response) window.alert("Tuotteen lisäys ei onnistunut!");
+    console.log("response now", response);
     const id = response.id;
-    // history.push(`/products/${id}`);
+    if (window.confirm("Tuotteen lisäys onnistui!"))
+      history.push(`/products/${id}`);
   };
   if (!user) {
     return <div>No user found no authorization to add product</div>;
@@ -183,7 +106,7 @@ const AddProduct = ({ user }) => {
   const seller = user.name;
 
   const handleMockData = async () => {
-    await makeData(file);
+    await makeData(file, user);
   };
   return (
     <div className="Container">
@@ -220,7 +143,10 @@ const AddProduct = ({ user }) => {
             /* and other goodies */
           }) => (
             <form onSubmit={handleSubmit} className="Form-product">
-              <button onClick={handleMockData}> Tee 100 ilmoitusta</button>
+              <button type="button" onClick={handleMockData}>
+                {" "}
+                Tee 100 ilmoitusta
+              </button>
               <div className="Input-container-product">
                 <label>Tuotteen nimi: </label>
                 <input
@@ -276,15 +202,7 @@ const AddProduct = ({ user }) => {
               </div>
               <div className="Input-container-product">
                 <label>Myynti tapa: </label>
-                <input
-                  className="Input"
-                  type="string"
-                  name="sell_type"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.sell_type}
-                  placeholder="Myyntitapa"
-                />
+                <select className="Input">{sellOptionsHtml}</select>
               </div>
               <div className="Input-container-product">
                 <label>Lisatietoja tuotteesta: </label>

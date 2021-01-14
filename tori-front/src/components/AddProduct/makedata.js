@@ -125,7 +125,7 @@ function generateDescription() {
     test,
   ];
 
-  let name = name1[getRandomInt(0, name1.length + 1)];
+  let name = name1[getRandomInt(0, name1.length)];
   console.log("description", name);
   return name;
 }

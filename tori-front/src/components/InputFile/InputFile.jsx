@@ -1,24 +1,17 @@
 import "./InputFile.css";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import productService from "../../services/productService";
+import imageService from "../../services/imageService";
 
-const InputFile = () => {
-  const [file, setFile] = useState();
+const InputFile = ({ file, setFile }) => {
   const { id } = useParams();
 
   const [images, setImages] = useState([]);
 
-  const urlToImages = `${process.env.REACT_APP_API_URL}/products/${id}/images`;
-
   const handleChange = (event) => {
     setFile(event.target.files[0]);
   };
-  const fileFromServer = require("../AddProduct/images/test.jpeg").default;
-
-  console.log("file in change inputfile", file);
-  console.log("file in change but from server", fileFromServer);
 
   const uploadPhoto = async (event) => {
     if (!file) {
@@ -34,11 +27,9 @@ const InputFile = () => {
   useEffect(() => {
     const getImage = async () => {
       try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/products/${id}/images`
-        );
-        if (!response || !response.data.length === 0) return;
-        setImages(response.data);
+        const response = await imageService.getImagesWithProductId(id);
+        if (!response || !response.length === 0) return;
+        setImages(response);
       } catch (e) {
         console.log(e.message);
       }
