@@ -17,6 +17,7 @@ const AddUser = () => {
   const handleSubmit = async ({ values }) => {
     console.log("values now: ", values);
     const response = await userService.createUser(values);
+    if (!response) return window.alert("Käyttäjää ei voitu lisätä")
     const id = response.id;
     console.log("submitting product to db");
     history.push(`/products/${id}`);

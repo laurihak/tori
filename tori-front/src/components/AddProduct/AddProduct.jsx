@@ -44,7 +44,7 @@ const makeData = async (file, user) => {
     if (!response) return;
     const id = response.id;
     let i = 0;
-    for (i = 0; i < 50; i++) {
+    for (i = 0; i < 3; i++) {
       const responseImage = await productService.insertImage(id, file);
       if (!responseImage) window.alert("error inserting image");
     }
