@@ -1,3 +1,5 @@
+Database is not currently using volume so data is not persistent, command is commented in its dockerfile for easy access.
+
 Verkkosovellus, johon ihmiset voivat lisätä myytäviä tuotteita.
 
 Frontend on tehty create-react-app kirjastolla.
