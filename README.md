@@ -34,7 +34,7 @@ Haku toimii vain hakusanan ja sijainnin kanssa, tuotetyyppi otetaan käyttöön 
 
 ENGLISH:
 
-Web application where people can add products to sell.
+Web application where people can sell products.
 
 Frontend has been made with create-react-app.
 
