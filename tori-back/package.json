@@ -4,7 +4,7 @@
   "description": "backend of tori application",
   "main": "index.js",
   "scripts": {
-    "test": "test",
+    "test": "mocha",
     "dev": "nodemon index.js"
   },
   "author": "LH",
@@ -23,6 +23,8 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "eslint": "^7.17.0"
+    "chai": "^4.2.0",
+    "eslint": "^7.17.0",
+    "mocha": "^8.2.1"
   }
 }

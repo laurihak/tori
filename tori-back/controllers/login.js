@@ -17,17 +17,20 @@ loginRouter.post("/", async (req, res) => {
   if (!user) {
     res
       .status(401)
-      .send({
-        error: "invalid username",
+      .json({
+        message: "Väärä sähköposti, käyttäjää ei löytynyt!",
       })
       .end();
   }
   const password = req.body.password;
   const hash = user.password_hash;
   if ((await comparePassword(password, hash)) === false) {
-    res.status(401).send({
-      error: "invalid password",
-    });
+    res
+      .status(401)
+      .json({
+        message: "Väärä salasana!",
+      })
+      .end();
   } else {
     const userForToken = {
       email: user.email,
@@ -43,7 +46,7 @@ loginRouter.post("/", async (req, res) => {
       id: user.id,
     };
     console.log(jsonToSend);
-    res.status(200).set("Content-type", "application/json").send(jsonToSend);
+    res.status(200).set("Content-type", "application/json").json(jsonToSend);
   }
 });
 

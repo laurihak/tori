@@ -128,14 +128,15 @@ productsRouter.get("/", async (req, res) => {
 productsRouter.post("/", async (req, res) => {
   const product = req.body;
   const headers = req.headers;
+  const date = new Date();
+  date.setHours(date.getHours() + 4);
   // checkProduct(product)
   const productToAdd = {
     id: uuidv4(),
-    input_date: "2017-03-31T06:30:20.000Z",
+    input_date: date.toISOString(),
     ...product,
   };
   const response = await insertProduct(productToAdd);
-  console.log("response", response);
   if (!response) return res.status(400).end();
   return res.status(200).send(productToAdd);
 });

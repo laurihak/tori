@@ -36,7 +36,7 @@ const getTotalPagesWithFilters = async (searchWord, location) => {
     } catch (e) {
       console.log(e.message);
     }
-  } else if (searchWord && !location || location === "kaikki") {
+  } else if ((searchWord && !location) || location === "kaikki") {
     try {
       const response = await knex
         .count("*")
@@ -65,14 +65,6 @@ const getTotalPagesWithFilters = async (searchWord, location) => {
 };
 
 const getProductsWithFilters = async (searchWord, location, page) => {
-  console.log(
-    "Products, filters: word: ",
-    searchWord,
-    " location: ",
-    location,
-    " pages: ",
-    page
-  );
   let pageToSend = 1;
   if (page) pageToSend = page;
   pageToSend = page;
@@ -96,7 +88,7 @@ const getProductsWithFilters = async (searchWord, location, page) => {
     } catch (e) {
       console.log(e.message);
     }
-  } else if (searchWord && !location || location === "kaikki") {
+  } else if ((searchWord && !location) || location === "kaikki") {
     console.log("searchword like");
     try {
       const response = await knex("products")
@@ -146,6 +138,13 @@ const deleteProduct = async (id) => {
     console.log(e.message);
   }
 };
+const deleteAllProducts = async (id) => {
+  try {
+    return await knex("products").del();
+  } catch (e) {
+    console.log(e.message);
+  }
+};
 const getProduct = async (id) => {
   try {
     return await knex("products").where("id", id).first();
@@ -159,6 +158,7 @@ module.exports = {
   getProductsWithFilters,
   getProduct,
   deleteProduct,
+  deleteAllProducts,
   insertProduct,
   getTotalPages,
   getTotalPagesWithFilters,

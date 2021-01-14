@@ -1,13 +1,13 @@
 CREATE TABLE products (
     index SERIAL,
-    id varchar(100),
+    id varchar(100) NOT NULL UNIQUE,
     seller_name varchar(50),
-    seller_id varchar(50),
-    product_name varchar(50),
-    price integer,
-    location varchar(50),
-    address varchar(50),
-    sell_type varchar(50),
+    seller_id varchar(50) NOT NULL,
+    product_name varchar(50) NOT NULL,
+    price integer NOT NULL,
+    location varchar(50) NOT NULL,
+    address varchar(50) NOT NULL,
+    sell_type varchar(50) NOT NULL,
     description varchar(4000) NOT NULL,
     input_date timestamp
 );
@@ -42,9 +42,9 @@ CREATE TABLE images (
 );
 CREATE TABLE users (
     index SERIAL,
-    id VARCHAR(100),
+    id VARCHAR(100) UNIQUE NOT NULL,
     username VARCHAR(50) UNIQUE NOT NULL,
-    email VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
     name VARCHAR(100) NOT NULL,
     password_hash VARCHAR(100) NOT NULL
 );

@@ -2,7 +2,6 @@ const { v4: uuidv4 } = require("uuid");
 const knex = require("../knex.js");
 
 const insertUser = async (user) => {
-  console.log("inserting user ", user);
   try {
     return await knex("users").insert(user);
   } catch (e) {
@@ -21,6 +20,14 @@ const getUsers = async () => {
 const deleteUser = async (id) => {
   try {
     return await knex("users").where("id", id).del();
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+const deleteAllUsers = async () => {
+  try {
+    return await knex("users").del();
   } catch (e) {
     console.log(e.message);
   }
@@ -54,5 +61,6 @@ module.exports = {
   getUserByName,
   getUsers,
   deleteUser,
+  deleteAllUsers,
   insertUser,
 };
