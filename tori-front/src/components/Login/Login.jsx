@@ -17,16 +17,15 @@ const Login = ({ setLogInfo }) => {
         email: values.email,
         password: values.password,
       });
+      console.log(response);
       if (response.token) {
-        window.localStorage.setItem(
-          "loggedInUser",
-          JSON.stringify(response)
-        );
+        window.localStorage.setItem("loggedInUser", JSON.stringify(response));
         setLogInfo(true);
         history.push("/product-list");
       }
     } catch (e) {
-      window.alert("password or username wrong");
+      console.log(e.response.data.message);
+      window.alert(e.response.data.message);
     }
   };
   return (
