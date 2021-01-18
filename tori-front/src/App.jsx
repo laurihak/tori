@@ -6,6 +6,7 @@ import ProductList from "./components/ProductList/ProductList";
 import Searchbar from "./components/Searchbar/Searchbar";
 import ProductPage from "./components/ProductPage/ProductPage";
 import AddProduct from "./components/AddProduct/AddProduct";
+import EditProduct from './components/EditProduct/EditProduct'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import AddUser from "./components/AddUser/AddUser";
 
@@ -43,6 +44,9 @@ const App = () => {
           </Route>
           <Route path="/add-product">
             <AddProduct user={user}></AddProduct>
+          </Route>
+          <Route path="/edit-product">
+            <EditProduct user={user}></EditProduct>
           </Route>
           <Route path="/add-user">
             <AddUser></AddUser>

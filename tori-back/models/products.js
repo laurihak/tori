@@ -67,7 +67,6 @@ const getTotalPagesWithFilters = async (searchWord, location) => {
 const getProductsWithFilters = async (searchWord, location, page) => {
   let pageToSend = 1;
   if (page) pageToSend = page;
-  pageToSend = page;
   const perPage = 20;
   const offset = (pageToSend - 1) * perPage;
   if (

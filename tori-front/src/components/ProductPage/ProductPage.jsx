@@ -67,9 +67,8 @@ const Product = ({ user }) => {
 
   if (!product) {
     return <div>Product not found</div>;
-  } else if (!user) {
-    return <div>User not found</div>;
   }
+  console.log('user', user)
   let descriptionHtml;
   if (product.description) {
     descriptionHtml = product.description.replace(/(?:\r\n|\r|\n)/g, "<br>");

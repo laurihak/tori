@@ -18,12 +18,23 @@ const Login = ({ setLogInfo }) => {
         password: values.password,
       });
       if (response.token) {
-        window.localStorage.setItem("loggedInUser", JSON.stringify(response));
+        const jsonResponse = JSON.stringify(response);
+        const parsedResponse = JSON.parse(jsonResponse);
+        console.log(JSON.parse(jsonResponse).name);
+        window.alert(
+          `Kirjautuminen onnistui kayttajalla: ${parsedResponse.name}!`
+        );
+        window.localStorage.setItem("loggedInUser", jsonResponse);
         setLogInfo(true);
         history.push("/product-list");
       }
     } catch (e) {
-      window.alert(e.response.data.message);
+      if (e.response && e.response.data && e.response.data.message)
+        window.alert(e.response.data.message);
+      else {
+        console.log();
+        window.alert(e);
+      }
     }
   };
   return (

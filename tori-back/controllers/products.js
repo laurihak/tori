@@ -83,7 +83,6 @@ productsRouter.get("/:id/images", async (req, res) => {
 
 productsRouter.get("/:id/images/:id_image", async (req, res) => {
   const id = req.params.id_image;
-  console.log(id);
   const product = await getImage(id);
   if (!product) res.status(400).end();
 
@@ -92,17 +91,14 @@ productsRouter.get("/:id/images/:id_image", async (req, res) => {
 
 productsRouter.post("/:id/images", upload.single("avatar"), (req, res) => {
   const product_id = req.params.id;
-  console.log("reqfile: ", req.file);
   const image = {
     id: uuidv4(),
     product_id: product_id,
     image_name: req.file.originalname.replace(/\s/g, ""),
     image_data: fs.readFileSync(req.file.path),
   };
-  console.log("image now");
   if (!image) return res.status(400).end();
   fs.unlinkSync(req.file.path);
-  console.log(image);
   insertImage(image, product_id);
   res.send(image);
 });
@@ -130,7 +126,6 @@ productsRouter.post("/", async (req, res) => {
   const headers = req.headers;
   const date = new Date();
   date.setHours(date.getHours() + 4);
-  console.log("product body", req.body);
   const productToAdd = {
     id: uuidv4(),
     input_date: date.toISOString(),

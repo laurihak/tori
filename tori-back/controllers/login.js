@@ -10,21 +10,19 @@ loginRouter.post("/", async (req, res) => {
   } else {
     user = await getUserByEmail(req.body.email);
   }
-  console.log("body", req.body)
 
   if (!user) {
-    res
+    return res
       .status(401)
       .json({
         message: "Väärä sähköposti, käyttäjää ei löytynyt!",
       })
       .end();
   }
-  console.log(user)
   const password = req.body.password;
   const hash = user.password_hash;
   if ((await comparePassword(password, hash)) === false) {
-    res
+    return res
       .status(401)
       .json({
         message: "Väärä salasana!",
