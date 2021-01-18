@@ -1,23 +1,22 @@
 import "./EditProduct.css";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
 import productService from "../../services/productService";
 import InputFile from "../InputFile/InputFile";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const productSchema = Yup.object().shape({
-  productName: Yup.string().required("Tuotteen nimi vaaditaan"),
-  sellerName: Yup.string().required("Myyjän nimi vaaditaan"),
-  price: Yup.number("Hinnan täytyy olla numero").required("Hinta vaaditaan"),
-  location: Yup.string().required("Paikka vaaditaan"),
-  address: Yup.string().required("Osoite vaaditaan"),
-  sellType: Yup.string().required("Myyntitapa vaaditaan"),
+  productName: Yup.string().required("Tuotteen nimi vaaditaan!"),
+  sellerName: Yup.string().required("Myyjän nimi vaaditaan!"),
+  price: Yup.number().integer().typeError("Hinnan täytyy olla kokonaisluku!").required("Hinta vaaditaan!"),
+  location: Yup.string().required("Paikka vaaditaan!"),
+  address: Yup.string().required("Osoite vaaditaan!"),
+  sellType: Yup.string().required("Myyntitapa vaaditaan!"),
   description: Yup.string(),
 });
-
 
 const locationOptions = [
   "Uusimaa",
@@ -56,13 +55,41 @@ const sellOptionsHtml = sellOptions.sort().map((o, i) => (
 ));
 
 const EditProduct = ({ user }) => {
+  const [product, setProduct] = useState();
+  const { id } = useParams();
   const [file, setFile] = useState();
 
   const history = useHistory();
 
+  useEffect(() => {
+    const getProduct = async () => {
+      console.log("id now ", id);
+      try {
+        const response = await productService.getById(id);
+        if (!response) {
+          window.alert("Tuotetta ei löytynyt");
+        }
+        setProduct(response);
+      } catch (e) {
+        if (e && e.response && e.response.data && e.response.data.message)
+          window.alert(e.response.data.message);
+        else {
+          window.alert(e);
+        }
+      }
+    };
+    getProduct();
+  }, [id]);
+
   const handleSubmit = async ({ values }) => {
+    const newObject = {
+      ...values,
+      id: product.id,
+      input_date: product.input_date,
+      seller_id: product.seller_id,
+    };
     try {
-      const response = await productService.create(values, user);
+      const response = await productService.update(newObject);
       const id = response.id;
       if (window.confirm("Tuotteen muokkaus onnistui!"))
         history.push(`/products/${id}`);
@@ -70,14 +97,13 @@ const EditProduct = ({ user }) => {
       window.alert(e.response.data.message);
     }
   };
-  if (!user) {
-    return <div>No user found no authorization to add product</div>;
-  }
-  const seller = user.name;
 
-  const handleMockData = async () => {
-    await makeData(file, user);
-  };
+  if (!user) {
+    return <div>Käyttäjää ei löytynyt</div>;
+  } else if (!product) {
+    return <div>Tuotetta ei löytynyt</div>;
+  }
+  console.log(product);
   return (
     <div className="Container">
       <div className="Add-product-container">
@@ -85,13 +111,13 @@ const EditProduct = ({ user }) => {
 
         <Formik
           initialValues={{
-            productName: "",
-            sellerName: seller,
-            price: "",
-            location: "",
-            address: "",
-            sellType: "",
-            description: "",
+            productName: product.product_name,
+            sellerName: user.name,
+            price: product.price,
+            location: product.location,
+            address: product.address,
+            sellType: product.sell_type,
+            description: product.description,
           }}
           validationSchema={productSchema}
           validateOnBlur={false}
@@ -113,10 +139,6 @@ const EditProduct = ({ user }) => {
             /* and other goodies */
           }) => (
             <form onSubmit={handleSubmit} className="Form-product">
-              <button type="button" onClick={handleMockData}>
-                {" "}
-                Tee 100 ilmoitusta
-              </button>
               <div className="Input-container-product">
                 <label>Tuotteen nimi: </label>
                 <input
@@ -138,10 +160,11 @@ const EditProduct = ({ user }) => {
               <div className="Input-container-product">
                 <label>Myyjän nimi: </label>
                 <input
-                  className="Input"
+                readOnly
+                  className="Input Input-seller"
                   type="string"
                   name="sellerName"
-                  onChange={handleChange}
+                  // onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.sellerName}
                   placeholder="Myyjan nimi"
@@ -210,7 +233,7 @@ const EditProduct = ({ user }) => {
                 </div>
               </div>
               <button className="Button" type="submit" disabled={isSubmitting}>
-                Lisää ilmoitus
+                Päivitä ilmoitus
               </button>
             </form>
           )}

@@ -45,7 +45,7 @@ const App = () => {
           <Route path="/add-product">
             <AddProduct user={user}></AddProduct>
           </Route>
-          <Route path="/edit-product">
+          <Route path="/edit-product/:id">
             <EditProduct user={user}></EditProduct>
           </Route>
           <Route path="/add-user">

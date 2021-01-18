@@ -6,6 +6,7 @@ const upload = multer({ dest: "uploads/" });
 
 const {
   insertProduct,
+  updateProduct,
   deleteProduct,
   getProduct,
   getProductsWithFilters,
@@ -124,11 +125,11 @@ productsRouter.get("/", async (req, res) => {
 productsRouter.post("/", async (req, res) => {
   const product = req.body;
   const headers = req.headers;
-  const date = new Date();
-  date.setHours(date.getHours() + 4);
+  const inputDate = new Date();
+  inputDate.setHours(inputDate.getHours() + 4);
   const productToAdd = {
     id: uuidv4(),
-    input_date: date.toISOString(),
+    input_date: inputDate.toISOString(),
     seller_name: product.sellerName,
     seller_id: product.seller_id,
     product_name: product.productName,
@@ -143,6 +144,29 @@ productsRouter.post("/", async (req, res) => {
   return res.status(200).send(productToAdd);
 });
 
-productsRouter.put("/", (req, res) => {});
+productsRouter.put("/", async (req, res) => {
+  const product = req.body;
+  const headers = req.headers;
+  // last updated not currently using
+  // const updateDate = new Date();
+  // updateDate.setHours(updateDate.getHours() + 4);
+  const productToAdd = {
+    id: product.id,
+    input_date: product.input_date,
+    seller_name: product.sellerName,
+    seller_id: product.seller_id,
+    product_name: product.productName,
+    price: product.price,
+    location: product.location,
+    address: product.address,
+    sell_type: product.sellType,
+    description: product.description,
+  };
+  
+  const response = await updateProduct(productToAdd);
+  if (!response)
+    return res.status(400).json({ message: "Virhe muokattaessa tuotetta!" });
+  return res.status(200).send(productToAdd);
+});
 
 module.exports = productsRouter;

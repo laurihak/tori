@@ -42,11 +42,12 @@ const create = async (newObject, user) => {
   return response.data;
 };
 
-const update = async (id, newObject) => {
+const update = async (newObject) => {
   const config = {
     headers: { Authorization: token },
   };
-  const response = await axios.put(`${baseUrl} /${id}`, newObject, config);
+  console.log("sendgin this to backend", newObject)
+  const response = await axios.put(`${baseUrl}/products`, newObject, config);
   return response.data;
 };
 

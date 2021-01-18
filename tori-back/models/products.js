@@ -8,6 +8,15 @@ const insertProduct = async (product) => {
   }
 };
 
+const updateProduct = async (product) => {
+  console.log("inserting this: ", product);
+  try {
+    return await knex("products").update(product).where("id", product.id);
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
 const getTotalPages = async () => {
   try {
     return await knex.count("*").table("products").first();
@@ -158,6 +167,7 @@ module.exports = {
   deleteProduct,
   deleteAllProducts,
   insertProduct,
+  updateProduct,
   getTotalPages,
   getTotalPagesWithFilters,
 };

@@ -27,7 +27,8 @@ const Product = ({ user }) => {
   const [images, setImages] = useState([]);
 
   const onDelete = async () => {
-    if (!window.confirm(`Are you sure you want to delete ${product.name}?`))
+    console.log(product);
+    if (!window.confirm(`Are you sure you want to delete ${product.product_name}?`))
       return;
     await axios.delete(`${API_URL}/products/${id}`);
     window.alert("Product deleted");
@@ -35,6 +36,7 @@ const Product = ({ user }) => {
   };
 
   const onEdit = async () => {
+    history.push(`/edit-product/${id}`);
   };
 
   useEffect(() => {
@@ -68,7 +70,7 @@ const Product = ({ user }) => {
   if (!product) {
     return <div>Product not found</div>;
   }
-  console.log('user', user)
+  console.log("user", user);
   let descriptionHtml;
   if (product.description) {
     descriptionHtml = product.description.replace(/(?:\r\n|\r|\n)/g, "<br>");
