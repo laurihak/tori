@@ -2,9 +2,11 @@ Database is not currently using volume so data is not persistent, command is com
 
 Verkkosovellus, johon ihmiset voivat lisätä myytäviä tuotteita.
 
-Frontend on tehty create-react-app kirjastolla.
+Frontend on React pohjainen ja tehty create-react-app työkalulla.Ehdottomasti helpoin tapa päästä alkuun on create-react-app-nimisen työkalun käyttö. create-react-app on mahdollista asentaa omalle koneelle, mutta asennukseen ei ole tarvetta jos Noden mukana asentunut npm-työkalu on versioltaan vähintään 5.3. Tällöin npm:n mukana asentuu komento npx, joka mahdollistaa create-react-app:in käytön asentamatta sitä erikseen. Npm:n version saa selville komennolla npm -v.
 
-Backend on tehty nodejs-tiedostoilla.
+
+
+Backend on tehty nodejs.
 
 API on REST-pohjainen.
 
