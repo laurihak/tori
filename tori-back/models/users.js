@@ -9,6 +9,15 @@ const insertUser = async (user) => {
   }
 };
 
+const updateUser = async (user) => {
+  console.log("updating this: ", user);
+  try {
+    return await knex("users").update(product).where("id", user.id);
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
 const getUsers = async () => {
   try {
     return await knex.select().table("users");

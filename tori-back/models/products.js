@@ -9,7 +9,6 @@ const insertProduct = async (product) => {
 };
 
 const updateProduct = async (product) => {
-  console.log("inserting this: ", product);
   try {
     return await knex("products").update(product).where("id", product.id);
   } catch (e) {

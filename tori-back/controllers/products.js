@@ -35,13 +35,15 @@ productsRouter.get("/pages", async (req, res) => {
     location = query.location.toLocaleLowerCase();
   }
   const pages = await getTotalPagesWithFilters(searchWord, location);
+  if(!pages) return res.status(400).json({message: "Virhe,  ei löytynyt!"})
   return res.send(pages);
 });
 
 productsRouter.get("/:id", async (req, res) => {
   const id = req.params.id;
   const product = await getProduct(id);
-  res.send(product);
+  if(!product) return res.status(400).json({message: "Virhe, tuotetta ei löytynyt!"})
+  return res.send(product);
 });
 
 productsRouter.delete("/:id", async (req, res) => {
@@ -53,7 +55,7 @@ productsRouter.delete("/:id", async (req, res) => {
       await deleteImages(id);
       return res.status(200);
     } catch (e) {
-      res.status(400).end();
+      return res.status(400).json({message: "Virhe, kuvaa poistaessa!"})
     }
   }
 });
@@ -71,6 +73,8 @@ productsRouter.get("/:id/images", async (req, res) => {
   const product_id = req.params.id;
   // console.log("getting images now ");
   const images = await getImages(product_id);
+  if (!images)
+    return res.status(400).json({ message: "Virhe, kuvia ei löytynyt!" });
   const base64Images = [];
   images.forEach((i) => {
     if (i.image_data === null) return;
@@ -85,7 +89,7 @@ productsRouter.get("/:id/images", async (req, res) => {
 productsRouter.get("/:id/images/:id_image", async (req, res) => {
   const id = req.params.id_image;
   const product = await getImage(id);
-  if (!product) res.status(400).end();
+  if (!product) res.status(400).json({ message: "Virhe, kuvaa ei löytynyt!" });
 
   res.send({ pic: string });
 });
@@ -98,7 +102,8 @@ productsRouter.post("/:id/images", upload.single("avatar"), (req, res) => {
     image_name: req.file.originalname.replace(/\s/g, ""),
     image_data: fs.readFileSync(req.file.path),
   };
-  if (!image) return res.status(400).end();
+  if (!image)
+    return res.status(400).json({ message: "Virhe lisättäessä kuvaa!" });
   fs.unlinkSync(req.file.path);
   insertImage(image, product_id);
   res.send(image);
@@ -120,6 +125,8 @@ productsRouter.get("/", async (req, res) => {
     location = query.location.toLocaleLowerCase();
   }
   products = await getProductsWithFilters(searchWord, location, page);
+  if (!products)
+    return res.status(400).json({ message: "Virhe, tuotteita ei löytynyt!" });
   return res.send(products);
 });
 productsRouter.post("/", async (req, res) => {
@@ -140,7 +147,8 @@ productsRouter.post("/", async (req, res) => {
     description: product.description,
   };
   const response = await insertProduct(productToAdd);
-  if (!response) return res.status(400).end();
+  if (!response)
+    return res.status(400).json({ message: "Virhe lisättäessä tuotetta!" });
   return res.status(200).send(productToAdd);
 });
 
@@ -162,7 +170,7 @@ productsRouter.put("/", async (req, res) => {
     sell_type: product.sellType,
     description: product.description,
   };
-  
+
   const response = await updateProduct(productToAdd);
   if (!response)
     return res.status(400).json({ message: "Virhe muokattaessa tuotetta!" });
