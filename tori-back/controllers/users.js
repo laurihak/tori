@@ -44,27 +44,27 @@ userRouter.post("/", async (req, res) => {
     return res.status(400).json({ message: "Virhe lisättäessä käyttäjää!" });
   res.status(201).json({ message: "User created succesfully" });
 });
-userRouter.put("/:id", (req, res) => {
-  const user = req.body;
-  const headers = req.headers;
-  const productToAdd = {
-    id: user.id,
-    input_date: user.input_date,
-    seller_name: user.sellerName,
-    seller_id: user.seller_id,
-    product_name: user.productName,
-    price: user.price,
-    location: user.location,
-    address: user.address,
-    sell_type: user.sellType,
-    description: user.description,
-  };
+// userRouter.put("/:id", (req, res) => {
+//   const user = req.body;
+//   const headers = req.headers;
+//   const productToAdd = {
+//     id: user.id,
+//     input_date: user.input_date,
+//     seller_name: user.sellerName,
+//     seller_id: user.seller_id,
+//     product_name: user.productName,
+//     price: user.price,
+//     location: user.location,
+//     address: user.address,
+//     sell_type: user.sellType,
+//     description: user.description,
+//   };
 
-  const response = await updateUser(productToAdd);
-  if (!response)
-    return res.status(400).json({ message: "Virhe muokattaessa tuotetta!" });
-  return res.status(200).send(productToAdd);
-});
+//   const response = await updateUser(productToAdd);
+//   if (!response)
+//     return res.status(400).json({ message: "Virhe muokattaessa tuotetta!" });
+//   return res.status(200).send(productToAdd);
+// });
 
 userRouter.delete("/:id", (req, res) => {});
 
