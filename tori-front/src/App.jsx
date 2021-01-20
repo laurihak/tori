@@ -6,7 +6,7 @@ import ProductList from "./components/ProductList/ProductList";
 import Searchbar from "./components/Searchbar/Searchbar";
 import ProductPage from "./components/ProductPage/ProductPage";
 import AddProduct from "./components/AddProduct/AddProduct";
-import EditProduct from './components/EditProduct/EditProduct'
+import EditProduct from "./components/EditProduct/EditProduct";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import AddUser from "./components/AddUser/AddUser";
 
@@ -30,6 +30,7 @@ const App = () => {
     getCachedUser();
   }, [logInfo]);
 
+  console.log("console log for api url", process.env.REACT_APP_API_URL);
   return (
     <Router>
       <div className="App">

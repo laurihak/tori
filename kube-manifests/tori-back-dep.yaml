@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tori-back-dep
+  namespace: tori
+  labels:
+    app: tori-back
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tori-back
+  template:
+    metadata:
+      labels:
+        app: tori-back
+    spec:
+      containers:
+      - name: tori-back
+        image: laurihakala/tori-backend:latest
+        env:
+        - name: PG_DATABASE
+          value: tori
+        - name: PG_HOST
+          value: tori-postgres-svc
+        - name: PG_PASSWORD
+          value: password
+        - name: PG_USER
+          value: username
+        - name: SECRET
+          value: TORISECRET
+        ports:
+          - containerPort: 4000
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"

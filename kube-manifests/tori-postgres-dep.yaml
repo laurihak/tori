@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tori-postgres-dep
+  namespace: tori
+  labels:
+    app: tori-postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tori-postgres
+  template:
+    metadata:
+      labels:
+        app: tori-postgres
+    spec:
+      containers:
+        - name: tori-postgres
+          image: laurihakala/tori-postgres:latest
+          env:
+            - name: POSTGRES_DB
+              value: tori
+            - name: POSTGRES_PASSWORD
+              value: password
+            - name: POSTGRES_USER
+              value: username
+          ports:
+            - containerPort: 5432
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
